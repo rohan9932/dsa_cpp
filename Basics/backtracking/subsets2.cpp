@@ -25,7 +25,6 @@ vector<vector<int>> subsetsWithDup(vector<int>& nums) {
 }
 
 //rec approach
-//set approach
 void pushSubsetsrec(vector<vector<int>>& ans, vector<int>& arr, vector<int> subset, int i) {
     if(i == arr.size()) {
         ans.push_back(subset);
