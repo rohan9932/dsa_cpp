@@ -1,16 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int power(int x, int n) {
-	if(n == 0) {
-		return 1;
-	}
-
-	double half = power(x, n/2);
-
-	return (n%2 == 0) ? power(x, n/2)*power(x,n/2) : x*power(x, n/2)*power(x,n/2);
-}
-
 int pow(int x, int n) {
 	long long N = n;
 	if(N < 0) {
@@ -21,7 +11,7 @@ int pow(int x, int n) {
 		return 1;
 	}
 
-	double half = power(x, N/2);
+	double half = pow(x, N/2);
 
 	return (n%2 == 0) ? half*half : x*half*half;
 }
