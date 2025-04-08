@@ -70,6 +70,49 @@ void invinsertionSort(vector<int>& arr, int n) { //O(n^2)
 	}
 }
 
+//Merge Sort
+void merge(vector<int>& arr, int st, int mid, int end) {
+	vector<int> temporary;
+	int i = st, j = mid+1;
+
+	//merging the sorted arrays
+	while(i <= mid && j <= end) {
+		if(arr[i] <= arr[j]) {
+			temporary.push_back(arr[i]);
+			i++;
+		} else {
+			temporary.push_back(arr[j]);
+			j++;
+		}
+	}
+
+	//putting remaining values
+	while(i <= mid) {
+		temporary.push_back(arr[i]);
+		i++;
+	}
+	while(j <= end) {
+		temporary.push_back(arr[j]);
+		j++;
+	}
+
+	//copy the temp value to main array
+	for(int idx = 0; idx < temporary.size(); idx++) {
+		arr[st + idx] = temporary[idx];
+	}
+}
+
+void mergeSort(vector<int>& arr, int st, int end) {
+	if(st < end) {
+		int mid = st + (end-st)/2;
+		mergeSort(arr, st, mid); //left side
+		mergeSort(arr, mid+1, end); //right side
+
+		merge(arr, st, mid, end); //merging the left and right arrays
+	}
+}
+
+
 int main() {
 	#ifndef ONLINE_JUDGE
 	//for getting input from input.txt
@@ -88,7 +131,7 @@ int main() {
 
 	int n = arr.size();
 
-	invinsertionSort(arr, n);
+	mergeSort(arr, 0, n-1);
 
 	for(int i = 0; i < n; i++) {
 		cout << arr[i] << " ";
