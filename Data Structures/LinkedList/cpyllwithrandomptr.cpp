@@ -47,11 +47,11 @@ public:
 		if(position < 0) {
 			cout << "Invalid Position.\n";
 			return;
-		} 
+		}
 		if(position == 0) {
 			push_front(val);
 			return;
-		} 
+		}
 
 		Node* newNode = new Node(val); //creating new node
 		Node* temp = head;
@@ -68,7 +68,7 @@ public:
 	}
 
 	void pop_front() { //O(1)
-		if(head == NULL) { 
+		if(head == NULL) {
 			cout << "LL is empty.\n";
 			return;
 		}
