@@ -46,7 +46,7 @@ public:
 
 	void pop() {
 		if(s.top() < minStack) { //changing the minval to previous minval
-			minStack = (2*minStack) - s.top() ;
+			minStack = (2*minStack) - s.top();
 		}
 		s.pop();
 	}
