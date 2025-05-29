@@ -60,14 +60,42 @@ void helper(Node* root, int k, int& count, vector<int> path) {
         if(sum == k) count++;
     }
 
-    //backtracking step
-    path.pop_back();
+    //don't need to backtrack as we are just passing path by value
 }
 
 int sumK(Node* root, int k) {
     vector<int> path;
     int count = 0;
     helper(root, k, count, path);
+    return count;
+}
+
+//SumK in O(n) time complexity
+
+void helper2(Node* root, int k, int currSum, int& count, unordered_map<int, int>& prefix_sum) {
+    if(root == NULL) return;
+
+    currSum += root->data; //updating currSum
+
+    if(prefix_sum.find(currSum - k) != prefix_sum.end()) { //checking is any viable path exists
+        count += prefix_sum[currSum - k];
+    }
+
+    prefix_sum[currSum]++; //inputting the currSum in the hashmap
+
+    helper2(root->left, k, currSum, count, prefix_sum);
+    helper2(root->right, k, currSum, count, prefix_sum);
+
+    //backtracking step
+    prefix_sum[currSum]--;
+}
+
+int sumK(Node* root, int k) {
+    int count = 0;
+    int currSum = 0;
+    unordered_map<int, int> prefix_sum;
+    prefix_sum[0] = 1;
+    helper2(root, k, currSum, count, prefix_sum);
     return count;
 }
 
