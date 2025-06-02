@@ -51,23 +51,25 @@ vector<int> diagonal(Node *root) {
     q.push(make_pair(root, 0));
 
     while(!q.empty()) {
-        pair<Node*, int> temp = q.front();
+        pair<Node*, int> front = q.front();
         q.pop();
-
-        Node* frontNode = temp.first;
-        int diag_dist = temp.second;
-
-        nodes[diag_dist].push_back(frontNode->data);
-
-        if(frontNode->left) {
-            q.push(make_pair(frontNode->left, diag_dist + 1));
-        }
-        if(frontNode->right) {
-            q.push(make_pair(frontNode->right, diag_dist));
+        
+        Node* frontNode = front.first;
+        int diag_dist = front.second;
+        
+        //traverse through the diagonal distance
+        while(frontNode) { //because the left subtree should be taken first
+            nodes[diag_dist].push_back(frontNode->data);
+            
+            if(frontNode->left) {
+                q.push(make_pair(frontNode->left, diag_dist+1));
+            }
+            
+            frontNode = frontNode->right;
         }
     }
 
-    for(auto i: nodes) {
+    for(auto& i: nodes) {
         for(auto j: i.second) {
             ans.push_back(j);
         }
