@@ -50,8 +50,8 @@ Node* lowestCommonAncestor(Node* root, Node* p, Node* q) {
 
     if(leftAns == NULL && rightAns == NULL) return NULL;
     else if(leftAns == NULL && rightAns != NULL) return rightAns;
-    else if(leftAns != NULL && rightAns == NULL) return leftAns;
-    else return root;
+    else if(leftAns != NULL && rightAns == NULL) return leftAns; 
+    else return root; //lca
 }
 
 int main() {
