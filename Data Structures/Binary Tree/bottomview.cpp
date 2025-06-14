@@ -76,6 +76,28 @@ vector<int> bottomView(Node *root) {
     return ans;
 }
 
+//Approach 2
+void mapping(Node* root, map<int, pair<int, int>>&m, int hd, int lvl) {
+    if(root == NULL) return;
+    mapping(root->left, m, hd-1, lvl+1);
+    mapping(root->right, m, hd+1, lvl+1);
+    if(m.find(hd) == m.end() || lvl >= m[hd].second) {
+        m[hd] = {root->data, lvl};
+    }
+}
+vector<int> bottomView2(Node *root) {
+    // Your Code Here
+    vector<int> ans;
+    if(root == NULL) return ans;
+    
+    map<int, pair<int, int>> m;
+    mapping(root, m, 0, 0);
+    for(auto i: m) {
+        ans.push_back(i.second.first);
+    }
+    return ans;
+}
+
 int main() {
 
     return 0;

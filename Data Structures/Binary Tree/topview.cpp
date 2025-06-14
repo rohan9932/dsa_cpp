@@ -80,6 +80,28 @@ vector<int> topView(Node *root) {
     return ans;
 }
 
+//Approach 2
+void mapping(Node* root, int v_lvl, int lvl, map<int, pair<int,int>>& m) {
+    if(root == NULL) return;
+    if(m.find(v_lvl) == m.end() || lvl < m[v_lvl].first) {
+        m[v_lvl] = {lvl, root->data};
+    }
+    mapping(root->left, v_lvl-1, lvl+1, m);
+    mapping(root->right, v_lvl+1, lvl+1, m);
+}
+
+vector<int> topView2(Node *root) {
+    vector<int> ans;
+    if(root == NULL) return ans;
+    map<int, pair<int, int>> m;
+    mapping(root, 0, 0, m);
+    for(auto i: m) {
+        ans.push_back(i.second.second);
+    }
+    
+    return ans;
+}
+
 int main() {
 
     return 0;

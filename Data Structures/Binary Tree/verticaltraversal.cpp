@@ -80,6 +80,31 @@ vector<vector<int>> verticalOrder(Node* root) {
     return ans;
 }
 
+//Approach 2
+void mapping(Node* root, int v_lvl, int lvl, map<int, map<int, vector<int>>>& m) {
+    if(root == NULL) return;
+    m[v_lvl][lvl].push_back(root->data);
+    mapping(root->left, v_lvl-1, lvl+1, m);
+    mapping(root->right, v_lvl+1, lvl+1, m);
+}
+
+vector<vector<int>> verticalTraversal(Node* root) {
+    vector<vector<int>>ans;
+    if(root == NULL) return ans;
+    map<int, map<int, vector<int>>> m; // vertical level -> (lvl -> nodes)
+    mapping(root, 0, 0, m);
+    for(auto i: m) {
+        vector<int> v_lvl;
+        for(auto j: i.second) {
+            vector<int> lvl_sort = j.second;
+            sort(lvl_sort.begin(), lvl_sort.end());
+            v_lvl.insert(v_lvl.end(), lvl_sort.begin(), lvl_sort.end());
+        }
+        ans.push_back(v_lvl);
+    }
+    return ans;
+}
+
 int main() {
 
     return 0;

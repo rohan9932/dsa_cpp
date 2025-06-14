@@ -83,6 +83,35 @@ vector<int> zigZagTraversal(Node* root) {
     return ans;
 }
 
+//Modified code
+vector<vector<int>> zigzagLevelOrder(Node* root) {
+    vector<vector<int>> ans;
+    if(root == NULL) return ans;
+
+    queue<Node*> q;
+    q.push(root);
+    bool isReversed = false;
+
+    while(!q.empty()) {
+        //handle each level
+        int size = q.size();
+        vector<int> level;
+        for(int i = 0; i < size; i++) {
+            Node* temp = q.front();
+            q.pop();
+            level.push_back(temp->data);
+            if(temp->left) q.push(temp->left);
+            if(temp->right) q.push(temp->right);
+        }
+        //check if need to go right -> left
+        if(isReversed) reverse(level.begin(), level.end());
+        ans.push_back(level);
+        isReversed = !isReversed; //change direction
+    }
+
+    return ans;
+}
+
 int main() {
 
     return 0;
