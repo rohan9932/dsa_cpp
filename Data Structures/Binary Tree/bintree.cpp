@@ -195,7 +195,81 @@ void postorder(Node* root) {
 	cout << root->data << " ";
 }
 
-//this using iteration
+void postordertwoStackcs(Node* root) {
+	// 1. Take two stacks
+	// 2. Push root to the first stack
+	// 3. Traverese the first stack while stack isn't empty
+	// 4. Take the top element and push that to other stack
+	// 5. If left and right exists of temp push them to current stack
+	// 6. when stack 1 is empty traverse the stack 2 and print it.
+	if(root == NULL) return;
+	stack<Node*> s1, s2;
+	s1.push(root);
+	while(!s1.empty()) {
+		Node* temp = s1.top();
+		s1.pop();
+		s2.push(temp);
+		if(temp->left) {
+			s1.push(temp->left);
+		}
+		if(temp->right) {
+			s1.push(temp->right);
+		}
+	}
+	while(!s2.empty()) {
+		cout << s2.top() << " ";
+		s2.pop();
+	}
+	cout << "\n";
+}
+
+void postorderoneStack(Node* root) {
+	if(root == NULL) return;
+	vector<int> postorder;
+	stack<Node*> s;
+	s.push(root);
+	while(!s.empty()) {
+		Node* temp = s.top();
+		s.pop();
+		postorder.push_back(temp->data);
+		if(temp->left) {
+			s.push(temp->left);
+		}
+		if(temp->right) {
+			s.push(temp->right);
+		}
+	}
+	reverse(postorder.begin(), postorder.end());
+	cout << "\n";
+}
+
+//all traversals using iteration
+void inprepostorder(Node* root, vector<int>& preorder, vector<int>& inorder, vector<int>& postorder) {
+	if(root == NULL) return;
+	stack<pair<Node*, int>> s;
+	s.push({root, 1});
+	while(!s.empty()) {
+		pair<Node*, int> temp = s.top();
+		s.pop();
+		if(temp.second == 1) { //preorder
+			preorder.push_back(temp.first->data);
+			temp.second++;
+			s.push(temp);
+			if(temp.first->left) {
+				s.push({temp.first->left, 1});
+			}
+		} else if(temp.second == 2) { //inorder
+			inorder.push_back(temp.first->data);
+			temp.second++;
+			s.push(temp);
+			if(temp.first->right) { //postorder
+				s.push({temp.first->right, 1});
+			}
+		} else {
+			postorder.push_back(temp.first->data);
+		}
+	}
+}
 
 int main() {
 	Node* root = NULL;
