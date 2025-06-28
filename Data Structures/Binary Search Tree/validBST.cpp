@@ -83,6 +83,7 @@ bool isValidBST(Node* root) {
     for(int i = 1; i < inorder.size(); i++) {
         if(!(inorder[i-1] < inorder[i])) {
             ans = false;
+            break;
         }
     }
 
