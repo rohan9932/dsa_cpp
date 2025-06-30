@@ -74,6 +74,36 @@ vector<int> inorderTraversal(TreeNode* root) {
     return ans;
 }
 
+vector<int> preorderTraversal(TreeNode* root) {
+    vector<int> ans;
+    if(root == NULL) return ans;
+
+    TreeNode* curr = root;
+    while(curr != NULL) {
+        if(curr->left == NULL) {
+            ans.push_back(curr->data);
+            curr = curr->right;
+        } else {
+            //find the IP
+            TreeNode* IP = curr->left;
+            while(IP->right != NULL && IP->right != curr) {
+                IP = IP->right;
+            }
+
+            if(IP->right == NULL) { //establish connection
+                IP->right = curr;
+				ans.push_back(curr->data);
+                curr = curr->left;
+            } else {
+                IP->right = NULL;
+                curr = curr->right;
+            }
+        }
+    }
+
+    return ans;
+}
+
 int main() {
     return 0;
 }
