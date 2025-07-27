@@ -73,7 +73,9 @@ int spanningTreewithMinHeap(int V, vector<vector<int>> edges) {
     minHeap.push({0, 0}); //{weight, node}
 
     while(!minHeap.empty()) {
-        auto [minWeight, u] = minHeap.top();
+        auto temp = minHeap.top();
+        int minweight = temp.first;
+        int u = temp.second;
         minHeap.pop();
 
         if(isMST[u]) continue; //ignore if already in MST
@@ -81,7 +83,9 @@ int spanningTreewithMinHeap(int V, vector<vector<int>> edges) {
         isMST[u] = true;
         ans += key[u];
 
-        for(auto [node, weight] : adjList[u]) {
+        for(auto neighbour : adjList[u]) {
+            int node = neighbour.first;
+            int weight = neighbour.second;
             if(isMST[node] == false && weight < key[node]) {
                 key[node] = weight; //update least weight
                 minHeap.push({key[node], node});
