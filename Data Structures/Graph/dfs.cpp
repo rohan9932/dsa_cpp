@@ -2,17 +2,28 @@
 using namespace std;
 
 void dfs(int node, unordered_map<int, bool>& isVisited, vector<vector<int>>& adj, vector<int>& ans) {
-    //1.Print the node.
-    //2. For it's adjacent nodes go to 1 level deeper if !isVisited
-    ans.push_back(node); //ans store
-    isVisited[node] = true; //mark visited
+    /*
+        take action on vertex after entering the vertex
+        here we are marking the node visited as true
+    */
+    ans.push_back(node);
+    isVisited[node] = true;
     
-    //recursive call for all connected node
     for(auto i: adj[node]) {
+        /*
+            Take action on child before entering the child node
+            here it's checking is the node visited or not
+        */
         if(!isVisited[i]) {
             dfs(i, isVisited, adj, ans);
         }
+        /*
+            Take action on child after exiting child node
+        */
     }
+    /*
+        Take action on vertex before exiting the vertex
+    */
 }
 
 vector<int> dfs(vector<vector<int>>& adj) {
