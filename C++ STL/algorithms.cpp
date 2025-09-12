@@ -2,12 +2,17 @@
 using namespace std;
 
 //custom comparator (here we are writing a custom comparator for sorting the pairs in descending order according second value)
-bool comparator(pair<int, int> p1, pair<int, int> p2) {
-	if(p1.second > p2.second) return true;
-	if(p1.second < p2.second) return false;
 
-	if(p1.first > p2.first) return true;
-	else return false;
+//internally it works like if we want to swap we have to return false
+
+static bool comparator(pair<int, int> p1, pair<int, int> p2) { //note this has to be static
+	if(p1.second != p2.second)
+		return p1.second > p2.second; //for remembering we just return the form 
+									//we want the array be into
+									//like here we want the descending form according 2nd value
+									//so we are just returning the form
+
+	return p1.first > p2.first;
 }
 
 int main() {
@@ -35,7 +40,7 @@ int main() {
 	//REVERSE
 	vector<int> v1 = {1, 2, 3, 4, 5};
 
-	reverse(v1.begin()+2, v1.end());
+	//reverse(v1.begin()+2, v1.end());
 
 	for(auto val: v1) {
 		cout << val << " ";
@@ -49,6 +54,22 @@ int main() {
 
 	//BINARY SEARCH
 	cout << binary_search(v1.begin(), v1.end(), 1) << "\n"; // data should be sorted
+
+	//LOWER BOUND AND UPPER BOUND
+	//lower bound returns the address of that particular element or if not found then just greater element pointer
+	int lBound = *(lower_bound(v1.begin(), v1.end(), 5));
+	int lBoundIdx = lower_bound(v1.begin(), v1.end(), 5) - v1.begin();
+	//upper bound finds next greater element's pointer
+	int uBound = *(upper_bound(v1.begin(), v1.end(), 1)); //internally binary search used
+
+	cout << lBoundIdx << endl;
+	cout << lBound << " " << uBound << endl;
+
+
+	//for set and maps we need to use like this to get logn complexity
+	set<int> st = {1, 2, 3, 4, 5};
+	cout << *(st.lower_bound(5)) << endl; //internally tree used
+
 
 
 	//NEXT_PERMUTATION
