@@ -1,15 +1,15 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
 class Node {
 public:
-	int data; //value
-	Node* next; //next node address
+    int data;
+    Node* next;
 
-	Node(int val) {
-		this->data = val;
-		this->next = NULL;
-	}
+    Node(int val) {
+        this->data = val;
+        this->next = NULL;
+    }
 };
 
 class List {
@@ -117,52 +117,50 @@ public:
 	}
 };
 
-Node* reverseListRecursive(Node* head) {
-	if(head == NULL || head->next == NULL) return head;
-	Node* newHead = reverseListRecursive(head->next);
-	//reversing connections
-	head->next->next = head;
-	head->next = NULL;
-	return newHead;
-}
+int helper(Node* slow, Node* fast) {
+    int cnt = 1;
+    fast = fast->next;
 
-Node* reverseList(Node* head) {
-    Node* prev = NULL;
-    Node* curr = head;
-    Node* next = NULL;
-    while(curr != NULL) {
-        next = curr->next;
-        curr->next = prev;
-        prev = curr;
-        curr = next;
+    while(fast != slow) {
+        cnt++;
+        fast = fast->next;
     }
 
-    return prev;
+    return cnt;
+}
+
+int lengthOfLLloop(Node* head) {
+    Node* slow = head;
+    Node* fast = head;
+
+    while(fast != NULL && fast->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+
+        if(slow == fast) return helper(slow, fast);
+    }
+
+    return -1;
 }
 
 int main() {
-	#ifndef OJ
-	freopen("input.txt", "r", stdin);
-	freopen("output.txt", "w", stdout);
-	#endif
+    List ll;
+    ll.push_back(1);
+    ll.push_back(2);
+    ll.push_back(3);
+    ll.push_back(4);
+    ll.push_back(5);
+    ll.push_back(6);
+    ll.push_back(7);
 
-	List ll;
-	ll.push_back(1);
-	ll.push_back(2);
-	ll.push_back(3);
+    Node* temp = ll.head;
+    while(temp->data != 3) {
+        temp = temp->next;
+    }
 
-	ll.printLL();
+    ll.tail->next = temp;
 
-	//reverse ll
-	ll.head = reverseList(ll.head);
+    cout << lengthOfLLloop(ll.head) << "\n";
 
-	Node* temp = ll.head;
-	while(temp->next != NULL) {
-		temp = temp->next;
-	}
-	ll.tail = temp;
-
-	ll.printLL();
-
-	return 0;
+    return 0;
 }
